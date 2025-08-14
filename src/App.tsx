@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Dashboard from './components/Dashboard'; // This will be renamed to Finans
+import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Calendar from './components/Calendar';
 import ProjectAnalysis from './components/ProjectAnalysis';
@@ -7,14 +7,14 @@ import Navigation from './components/Navigation';
 import TransactionForm from './components/TransactionForm';
 import UserBadge from './components/UserBadge';
 import UserPermissionsModal from './components/UserPermissionsModal';
+import Navbar from './components/Navbar';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showPermissionsModal, setShowPermissionsModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  
-  // Herkes admin yetkisine sahip - direkt erişim
+
   const isAdmin = true;
   const hasFullAccess = true;
   const user = { username: 'Kullanıcı' };
@@ -32,7 +32,14 @@ function App() {
       case 'home':
         return <Home />;
       case 'finans':
-        return <Dashboard transactions={transactions} onTransactionsUpdate={setTransactions} isAdmin={isAdmin} hasFullAccess={hasFullAccess} />;
+        return (
+          <Dashboard
+            transactions={transactions}
+            onTransactionsUpdate={setTransactions}
+            isAdmin={isAdmin}
+            hasFullAccess={hasFullAccess}
+          />
+        );
       case 'calendar':
         return <Calendar />;
       case 'settings':
@@ -50,9 +57,7 @@ function App() {
                         Kullanıcı izinlerini yönetin ve hangi sayfalara erişebileceklerini belirleyin.
                       </p>
                       <button
-                        onClick={() => {
-                          setShowPermissionsModal(true);
-                        }}
+                        onClick={() => setShowPermissionsModal(true)}
                         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition-all duration-200 hover:scale-105"
                       >
                         Kullanıcı İzinlerini Yönet
@@ -60,7 +65,6 @@ function App() {
                     </div>
                   </div>
                 )}
-                
               </div>
             </div>
           </div>
@@ -71,17 +75,17 @@ function App() {
   };
 
   return (
-    <div className="relative bg-white min-h-screen">
+    <div className="relative bg-white min-h-screen dark:bg-black text-gray-900 dark:text-white transition-colors">
+      <Navbar />
+
       <Navigation
         currentView={currentView}
         onViewChange={handleViewChange}
         onAddTransaction={() => setShowTransactionForm(true)}
         isAdmin={isAdmin}
       />
-      
-      <div className="pt-12">
-        {renderCurrentView()}
-      </div>
+
+      <div className="pt-12">{renderCurrentView()}</div>
 
       {showTransactionForm && (
         <TransactionForm
@@ -93,9 +97,7 @@ function App() {
       {showPermissionsModal && (
         <UserPermissionsModal
           isOpen={showPermissionsModal}
-          onClose={() => {
-            setShowPermissionsModal(false);
-          }}
+          onClose={() => setShowPermissionsModal(false)}
         />
       )}
     </div>
