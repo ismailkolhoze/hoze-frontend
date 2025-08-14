@@ -1,3 +1,4 @@
+import Navbar from './Navbar';
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, Filter, Download } from 'lucide-react';
 import IncomeDetailModal from './IncomeDetailModal';
@@ -169,6 +170,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   };
 
   return (
+    
     <div className="min-h-screen bg-white p-3">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
